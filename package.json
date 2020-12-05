@@ -1,0 +1,46 @@
+{
+  "name": "bossa-box-api",
+  "version": "1.0.0",
+  "description": "Boss Box Code Challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --maxWorkers=1 --forceExit --setupFiles dotenv/config",
+    "start": "ts-node ./src/index.ts"
+  },
+  "keywords": [
+    "api",
+    "bossa-box",
+    "node"
+  ],
+  "author": "Lourenço Passos",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^25.2.3",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/knex": "^0.16.1",
+    "@types/mongoose": "^5.10.0",
+    "@types/uuid": "^8.0.0",
+    "axios": "^0.21.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.2",
+    "moment": "^2.27.0",
+    "mongoose": "^5.10.15",
+    "mysql": "^2.18.1",
+    "supertest": "^6.0.1",
+    "ts-jest": "^26.1.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6",
+    "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.8",
+    "@types/supertest": "^2.0.10"
+  }
+}

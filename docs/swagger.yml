@@ -1,0 +1,251 @@
+openapi: "3.0.0"
+info:
+  version: "0.0.1"
+  # https://semver.org/lang/pt-BR/
+  title: Bossa Box
+  description: >
+    **Description**: Middleware to intercept requests to account core service.
+
+
+    # Errors
+
+    Bossa Box API uses [HTTP response status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) to indicate the success or failure of the requests
+
+    In general, there are three status code ranges you can expect:
+
+    - `2xx` success status codes confirm that your request worked as expected
+
+    - `4xx` error status codes indicate an error because of the information provided (e.g., a required parameter was not provided)
+
+    - `5xx` error status codes are rare and indicate an error with R4's servers
+
+
+    ## HTTP Status code summary
+
+    Extracted from [Stripe API codes](https://stripe.com/docs/api/errors)
+
+    - `200 - OK` Everything worked as expected.
+
+    - `201 - Created` Asset created.
+
+    - `400 - Bad Request` The request was unacceptable, often due to missing a required parameter.
+
+    - `500, 502, 503, 504 - Server Errors` Something went wrong on the service
+    ## Error codes
+
+
+servers:
+  - description: Development
+    url: https://api.dev.xpto.com
+  - description: Production
+    url: https://api.xpto.com
+
+tags:
+  - name: Tools
+
+paths:
+  /v1/tools:
+    get:
+      tags:
+        - Tools
+      summary: List of tools
+      description: Returns a list of tools. If there's no tools registered, an **empty** list will be returned.
+      responses:
+        200:
+          description: Tools successfully found.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ToolsSchema"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        500:
+          $ref: "#/components/responses/InternalServerError"
+          
+    post:
+      tags:
+        - Tools
+      summary: Add new tool
+      description: Add a new tool to the application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddToolSchema"
+      responses:
+        201:
+          description: Tools successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToolsSchema"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        500:
+          $ref: "#/components/responses/InternalServerError"
+  /v1/tools/{tool_id}:            
+    delete:
+      tags:
+        - Tools
+      summary: Delete a tool
+      description: Delete a tool  by `tool_id`.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - tool_id
+              properties:
+                tool_id:
+                  description: " `tool_id` of tool to be deleted"
+                  type: string
+                  example: "e42aad74-8fbd-4ce3-8bdd-cb9052f0dadc"
+      responses:
+        204:
+          description: Account successfully deleted
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    description: Sucess in account deletion
+                    type: string
+                    example: "Conta deletada com sucesso."
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        5xx:
+          $ref: "#/components/responses/InternalServerError"          
+  /v1/tools?:
+    get:
+      tags:
+        - Tools
+      summary: List of tools by tag
+      description: Returns a list of tools based on **tag** provided. If there's no tools registered, an **empty** list will be returned.
+      parameters:
+        - in: query
+          name: tag
+          required: true
+          schema:
+            type: string
+            description: The tag to filter to
+            example: node
+      responses:
+        200:
+          description: Tools successfully found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToolsSchema"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        500:
+          $ref: "#/components/responses/InternalServerError"
+
+
+components:
+  schemas:
+    ToolsSchema:
+      type: object
+      description: Describes the properties of a tool.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the tool
+          format: uuid-v4
+          example: "6d814c28-ff73-443c-bfe0-48d518aa32fa"
+        title:
+          type: string
+          description: Tool title
+          example: "Notion"
+        link:
+          type: string
+          description: Tool link.
+          example: "https://notion.so"
+        description:
+          type: string
+          description: Tool description.
+          example: "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized."
+        tags:
+          type: array
+          description: Tool tags.
+          items:
+            type: string
+            example: "organization"
+
+    AddToolSchema:
+      type: object
+      description: Describes the properties of a tool.
+      properties:
+        title:
+          type: string
+          description: Tool title
+          example: "Notion"
+        link:
+          type: string
+          description: Tool link.
+          example: "https://notion.so"
+        description:
+          type: string
+          description: Tool description.
+          example: "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized."
+        tags:
+          type: array
+          description: Tool tags.
+          items:
+            type: string
+            example: "organization"
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        "application/json":
+          schema:
+            properties:
+              code:
+                type: string
+                title: Error code
+                description: The type of error
+                example: "BAD_REQUEST"
+              message:
+                type: string
+                title: Error message
+                description: Describes a message informing a reason for the error
+                example: "Invalid request params"
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        "application/json":
+          schema:
+            properties:
+              code:
+                type: string
+                title: Error code
+                description: The type of error
+                example: "INTERNAL_SERVER_ERROR"
+              message:
+                type: string
+                title: Error message
+                description: Describes a message informing a reason for the error
+                example: "Unexpected error with our service"
+    NotFound:
+      description: Resource not found
+      content:
+        "application/json":
+          schema:
+            properties:
+              code:
+                type: string
+                title: Error code
+                description: The type of error
+                example: "TOOL_BNOT_FOUND"
+              message:
+                type: string
+                title: Error message
+                description: Describes a message informing a reason for the error
+                example: "Unable to found the requested tool"
