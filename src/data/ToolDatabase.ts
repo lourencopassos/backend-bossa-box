@@ -40,7 +40,7 @@ export class ToolDatabase extends BaseDatabase {
     try {
       await this.getConnection();
       const tool = await ToolModel.find(
-        { tags: tag });
+        { tags: { tag_name: tag } });
       return tool;
     } catch (error) {
       throw new Error(error.message);
