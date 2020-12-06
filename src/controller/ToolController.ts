@@ -35,4 +35,28 @@ export class ToolController {
       res.status(400).send({ error: error.message });
     }
   }
+
+  async getToolsByTag(req: Request, res: Response) {
+    try {
+      const tag = String(req.query.tag)
+
+      const toolBusiness = new ToolBusiness();
+      const tools = await toolBusiness.getToolsByTag(tag);
+
+      res.status(200).send({ tools });
+
+    } catch (error) {
+      res.status(400).send({ error: error.message });
+    }
+  }
+  async deleteTool(req: Request, res: Response) {
+    try {
+      const toolIdToDelete = req.params.id
+      const toolBusiness = new ToolBusiness();
+      const tools = await toolBusiness.deleteTool(toolIdToDelete);
+      res.status(204);
+    } catch (error) {
+      res.status(400).send({ error: error.message });
+    }
+  }
 }
