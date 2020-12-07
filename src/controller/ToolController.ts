@@ -17,7 +17,7 @@ export class ToolController {
 
       const tool = await toolBusiness.addTool(input)
 
-      res.status(201).send({ tool });
+      res.status(201).send({ message: "Conta adicionada com sucesso." });
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -54,7 +54,7 @@ export class ToolController {
       const toolIdToDelete = req.params.id
       const toolBusiness = new ToolBusiness();
       const tools = await toolBusiness.deleteTool(toolIdToDelete);
-      res.status(204);
+      res.status(204).send({ message: "Conta deletada com sucesso." });
     } catch (error) {
       res.status(400).send({ error: error.message });
     }

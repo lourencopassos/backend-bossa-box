@@ -15,7 +15,7 @@ export class ToolBusiness {
       tool.title
     );
 
-    if (toolAlreadyExistsInDatabase) {
+    if (toolAlreadyExistsInDatabase.length > 0) {
       throw new BadRequestError("Tool Already in Database");
     }
 
@@ -25,9 +25,11 @@ export class ToolBusiness {
       );
     }
 
-    await toolDatabase.addTool(
+    const toolAdded = await toolDatabase.addTool(
       tool.title, tool.link, tool.description, tool.tags
     );
+
+    return toolAdded
   }
 
   async getAllTools(skip: number, limit: number) {

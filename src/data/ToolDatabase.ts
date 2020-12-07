@@ -39,8 +39,8 @@ export class ToolDatabase extends BaseDatabase {
   public getToolByTag = async (tag: string) => {
     try {
       await this.getConnection();
-      const tool = await ToolModel.find(
-        { tags: { tag_name: tag } });
+      const tool = await ToolModel.find({ tags: tag })
+      console.log(tool)
       return tool;
     } catch (error) {
       throw new Error(error.message);

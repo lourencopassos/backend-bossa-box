@@ -14,9 +14,8 @@ export const ToolSchema = new Schema({
     type: String,
     required: "Description required",
   },
-  tags: [
-    { tag_name: String }
-  ]
+  tags: { type: Array }
+
 });
 
 export const ToolModel = mongoose.model("tools", ToolSchema);
