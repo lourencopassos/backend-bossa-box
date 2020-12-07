@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { AddressInfo } from "net";
 import express from "express";
-import { movieRouter } from "./routes/movieRouter";
+import { toolRouter } from "./routes/toolsRouter";
 import { ThirdParty } from "./services/ThirdParty";
 import cors from "cors";
 
@@ -11,7 +11,7 @@ app.use(cors({ origin: true }));
 
 app.use(express.json());
 
-app.use("/movies", movieRouter);
+app.use("/tools", toolRouter);
 
 export const server = app.listen(3000, () => {
   if (server) {

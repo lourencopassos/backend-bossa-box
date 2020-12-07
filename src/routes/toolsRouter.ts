@@ -7,6 +7,6 @@ const toolController = new ToolController();
 
 toolRouter.post("/", toolController.addTool);
 toolRouter.get("/", toolController.getAllTools);
-toolRouter.get("/", toolController.getToolsByTag);
-toolRouter.delete(":id", toolController.deleteTool);
+toolRouter.get("/filter", toolController.getToolsByTag);
+toolRouter.delete("/:id", toolController.deleteTool);
 

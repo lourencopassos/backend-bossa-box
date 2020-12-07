@@ -37,8 +37,6 @@ info:
 servers:
   - description: Development
     url: https://api.dev.xpto.com
-  - description: Production
-    url: https://api.xpto.com
 
 tags:
   - name: Tools
@@ -73,10 +71,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddToolSchema"
+              properties:
+                message:
+                  description: Sucess in account deletion
+                  type: string
+                  example: "Conta deletada com sucesso."
       responses:
         201:
-          description: Tools successfully added.
+          description: Tool successfully added.
           content:
             application/json:
               schema:
