@@ -17,7 +17,7 @@ export class ToolController {
 
       const tool = await toolBusiness.addTool(input)
 
-      res.status(201).send({ message: "Conta adicionada com sucesso." });
+      res.status(201).send({ message: "Ferramenta adicionada com sucesso." });
     } catch (error) {
       res.status(400).send({ error: error.message });
     }

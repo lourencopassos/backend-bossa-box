@@ -15,7 +15,6 @@ export abstract class BaseDatabase {
     db.once("open", () => {
       console.log("Database connected");
     });
-
     return db;
   };
 }
