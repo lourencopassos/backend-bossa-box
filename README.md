@@ -2,7 +2,7 @@
 
 ### Repositório do desafio técnico de backend para a BossaBox. Para saber mais sobre o escopo do desafio, [clique aqui](https://app.bossabox.com/profile/skills/challenges/5e3c53a13e80520008f25397).
 
-[![View in Swagger](http://jessemillar.github.io/view-in-swagger-button/button.svg)](http://petstore.swagger.io/?url=docs/swagger.yml)
+[![View in Swagger](http://jessemillar.github.io/view-in-swagger-button/button.svg)](https://app.swaggerhub.com/apis/lourencopassos/bossa-box/0.0.1)
 
 
 <br>
