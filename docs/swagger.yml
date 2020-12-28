@@ -4,7 +4,7 @@ info:
   # https://semver.org/lang/pt-BR/
   title: Bossa Box
   description: >
-    **Description**: Middleware to intercept requests to account core service.
+    **Description**: Tool Management API.
 
 
     # Errors
@@ -36,7 +36,7 @@ info:
 
 servers:
   - description: Development
-    url: https://api.dev.xpto.com
+    url: http://localhost:3000/
 
 tags:
   - name: Tools
