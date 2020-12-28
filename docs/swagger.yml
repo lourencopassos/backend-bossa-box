@@ -17,7 +17,7 @@ info:
 
     - `4xx` error status codes indicate an error because of the information provided (e.g., a required parameter was not provided)
 
-    - `5xx` error status codes are rare and indicate an error with R4's servers
+    - `5xx` error status codes are rare and indicate an error with the servers
 
 
     ## HTTP Status code summary
@@ -93,35 +93,24 @@ paths:
         - Tools
       summary: Delete a tool
       description: Delete a tool  by `tool_id`.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              required:
-                - tool_id
-              properties:
-                tool_id:
-                  description: " `tool_id` of tool to be deleted"
-                  type: string
-                  example: "e42aad74-8fbd-4ce3-8bdd-cb9052f0dadc"
+      parameters:
+      - in: path
+        name: tool_id
+        required: true
+        schema:
+          type: string
+          description: The tag to filter to
+          example: node
       responses:
         204:
-          description: Account successfully deleted
-          content:
-            application/json:
-              schema:
-                properties:
-                  message:
-                    description: Sucess in account deletion
-                    type: string
-                    example: "Conta deletada com sucesso."
+          $ref: "#/components/responses/DeleteSucess"
         400:
           $ref: "#/components/responses/BadRequest"
         404:
           $ref: "#/components/responses/NotFound"
         5xx:
           $ref: "#/components/responses/InternalServerError"          
-  /v1/tools?:
+  /v1/tools?tag:
     get:
       tags:
         - Tools
@@ -251,3 +240,13 @@ components:
                 title: Error message
                 description: Describes a message informing a reason for the error
                 example: "Unable to found the requested tool"
+    DeleteSucess:
+      description: Account successfully deleted
+      content:
+        "application/json":
+          schema:
+            properties:
+              message:
+                description: Sucess in account deletion
+                type: string
+                example: "Conta deletada com sucesso."
