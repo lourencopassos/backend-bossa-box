@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import { AddressInfo } from "net";
 import express from "express";
 import { toolRouter } from "./routes/toolsRouter";
-import { ThirdParty } from "./services/ThirdParty";
 import cors from "cors";
 
 dotenv.config();

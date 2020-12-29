@@ -17,8 +17,6 @@
 - Mongo DB Atlas
 - Mongoose
 - Express
-- JwtToken
-- Bcrypt
 - Jest
 - Supertest
 - Heroku
