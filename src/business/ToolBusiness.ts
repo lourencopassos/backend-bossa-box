@@ -1,11 +1,15 @@
+import { IToolBusiness, IToolDatabase } from "../@types/tools";
 import { ToolDatabase } from "../data/ToolDatabase";
 import { BadRequestError } from "../error/BadRequestError";
 import { NotFoundError } from "../error/NotFoundError";
 import { ToolInputDTO } from "../model/Tool";
 
-export class ToolBusiness {
+export class ToolBusiness implements IToolBusiness {
+  private toolDatabase: IToolDatabase;
+  constructor(toolDatabase: IToolDatabase) {
+    this.toolDatabase = toolDatabase
+  }
   async addTool(tool: ToolInputDTO) {
-    const toolDatabase = new ToolDatabase();
 
     if (!tool) {
       throw new BadRequestError("Invalid Request Params")
@@ -25,7 +29,7 @@ export class ToolBusiness {
       );
     }
 
-    const toolAdded = await toolDatabase.addTool(
+    const toolAdded = await this.toolDatabase.addTool(
       tool.title, tool.link, tool.description, tool.tags
     );
 
@@ -33,8 +37,7 @@ export class ToolBusiness {
   }
 
   async getAllTools(skip: number, limit: number) {
-    const toolDatabase = new ToolDatabase();
-    const tools = await toolDatabase.getAllTools(skip, limit);
+    const tools = await this.toolDatabase.getAllTools(skip, limit);
     return tools;
   }
 
@@ -42,8 +45,7 @@ export class ToolBusiness {
     if (!tag) {
       throw new BadRequestError("Check tool tag");
     }
-    const toolDatabase = new ToolDatabase();
-    const tool = await toolDatabase.getToolByTag(tag);
+    const tool = await this.toolDatabase.getToolByTag(tag);
     return tool;
   }
 

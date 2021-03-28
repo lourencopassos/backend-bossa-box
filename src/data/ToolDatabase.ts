@@ -29,7 +29,7 @@ export class ToolDatabase extends BaseDatabase {
   public getToolByTitle = async (toolTitle: string) => {
     try {
       await this.getConnection();
-      const tools = await ToolModel.find({ title: toolTitle })
+      const tools = await ToolModel.find({ title: { $regex: `.*${toolTitle}.*`, $options: 'i' } })
       return tools;
     } catch (error) {
       throw new Error(error.message);
@@ -39,8 +39,7 @@ export class ToolDatabase extends BaseDatabase {
   public getToolByTag = async (tag: string) => {
     try {
       await this.getConnection();
-      const tool = await ToolModel.find({ tags: tag })
-      console.log(tool)
+      const tool = await ToolModel.find({ tags: { $regex: `.*${tag}.*`, $options: 'i' } })
       return tool;
     } catch (error) {
       throw new Error(error.message);

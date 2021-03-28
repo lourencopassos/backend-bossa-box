@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
+import { IToolBusiness, IToolController } from "../@types/tools";
 import { ToolBusiness } from "../business/ToolBusiness";
+import { ToolDatabase } from "../data/ToolDatabase";
 import { ToolInputDTO } from "../model/Tool";
 
 export class ToolController {
-  async addTool(req: Request, res: Response) {
+  private toolBusiness: IToolBusiness;
+  constructor(toolBusiness: IToolBusiness) { this.toolBusiness = toolBusiness }
+  addTool = async (req: Request, res: Response) => {
     try {
 
       const input: ToolInputDTO = {
@@ -13,9 +17,9 @@ export class ToolController {
         tags: req.body.tags
       }
 
-      const toolBusiness = new ToolBusiness();
 
-      const tool = await toolBusiness.addTool(input)
+
+      const tool = await this.toolBusiness.addTool(input)
 
       res.status(201).send({ message: "Ferramenta adicionada com sucesso." });
     } catch (error) {
@@ -23,25 +27,23 @@ export class ToolController {
     }
   }
 
-  async getAllTools(req: Request, res: Response) {
+  getAllTools = async (req: Request, res: Response) => {
     try {
       const limit = Number(req.query.limit);
       const skip = Number(req.query.skip);
 
-      const toolBusiness = new ToolBusiness();
-      const tools = await toolBusiness.getAllTools(skip, limit);
+      const tools = await this.toolBusiness.getAllTools(skip, limit);
       res.status(200).send({ tools: tools, total: tools.length });
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
   }
 
-  async getToolsByTag(req: Request, res: Response) {
+  getToolsByTag = async (req: Request, res: Response) => {
     try {
       const tag = String(req.query.tag)
 
-      const toolBusiness = new ToolBusiness();
-      const tools = await toolBusiness.getToolsByTag(tag);
+      const tools = await this.toolBusiness.getToolsByTag(tag);
 
       res.status(200).send({ tools });
 
@@ -49,11 +51,10 @@ export class ToolController {
       res.status(400).send({ error: error.message });
     }
   }
-  async deleteTool(req: Request, res: Response) {
+  deleteTool = async (req: Request, res: Response) => {
     try {
       const toolIdToDelete = req.params.id
-      const toolBusiness = new ToolBusiness();
-      const tools = await toolBusiness.deleteTool(toolIdToDelete);
+      const tools = await this.toolBusiness.deleteTool(toolIdToDelete);
       res.status(204).send({ message: "Conta deletada com sucesso." });
     } catch (error) {
       res.status(400).send({ error: error.message });
