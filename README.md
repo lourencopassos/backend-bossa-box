@@ -30,10 +30,9 @@ Para uma visão completa das user stories do desafio, [clique aqui](https://app.
 A aplicação foi disponibilizada utilizando o Heroku, mas caso queria rodar localmente:
 
 1. `npm install` para instalar todas as dependências;
+2. `touch .env && cp .env.example .env` para copiar o conteudo do .env.example para um arquivo .env;
 3. `npm test` para rodar os testes do projeto;
-3. `npm start` para rodar localmente o projeto.
-4. Caso deseje rodar no docker a aplicação e o banco de dados, utilize os comandos `docker-compose up` e troque a variável de ambiente do banco de dados para `DB_DOCKER` no arquivo de `BaseConnection`. 
-
+4. `docker-compose up` para rodar localmente a aplicação e banco de dados via Docker.
 
 #### 👋🏽 Contato
 
