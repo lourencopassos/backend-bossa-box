@@ -27,7 +27,8 @@
 Para uma visão completa das user stories do desafio, [clique aqui](https://app.bossabox.com/profile/skills/challenges/5e3c53a13e80520008f25397).
 
 ## 🚙 Instruções para rodar a aplicação
-A aplicação foi disponibilizada utilizando o Heroku, mas caso queria rodar localmente:
+
+### Base URL: http://localhost/
 
 1. `npm install` para instalar todas as dependências;
 2. `touch .env && cp .env.example .env` para copiar o conteudo do .env.example para um arquivo .env;
